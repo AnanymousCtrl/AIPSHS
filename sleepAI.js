@@ -988,14 +988,14 @@ class SleepSchedulerApp {
         const profileInputs = [
             'bedtime', 'wakeTime', 'sleepGoal', 'lifestyle'
         ];
-        
+
         profileInputs.forEach(inputId => {
             const element = document.getElementById(inputId);
             if (element) {
                 element.addEventListener('change', () => this.updateProfile());
             }
         });
-        
+
         // Sleep issues checkboxes
         document.querySelectorAll('input[name="sleepIssues"]').forEach(checkbox => {
             checkbox.addEventListener('change', () => this.updateProfile());
@@ -1007,8 +1007,13 @@ class SleepSchedulerApp {
             generateBtn.addEventListener('click', () => this.generateSchedule());
         }
 
+        // Reset button
+        const resetBtn = document.getElementById('resetButton');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => this.resetAllData());
+        }
+
         // Auto-save on changes
-        window.addEventListener('beforeunload', () => this.saveUserData());
     }
 
     /**
@@ -1361,6 +1366,105 @@ class SleepSchedulerApp {
     }
 
     /**
+     * Reset all application data and UI state
+     */
+    resetAllData() {
+        console.log('Resetting all application data...');
+
+        // Clear completed tasks
+        this.completedTasks.clear();
+
+        // Reset current schedule
+        this.currentSchedule = [];
+
+        // Clear user history
+        this.userHistory = [];
+
+        // Reset AI model state
+        this.ai.userProfile = null;
+        this.ai.sleepPatterns = [];
+        this.ai.recommendations.clear();
+
+        // Clear form inputs
+        this.resetFormInputs();
+
+        // Clear UI elements
+        this.clearUIElements();
+
+        // Reset progress indicators
+        this.resetProgressIndicators();
+
+        // Show confirmation message
+        this.showNotification('All data has been reset. Please fill out your profile to get new recommendations.', 'info');
+
+        // Regenerate initial schedule after a short delay
+        setTimeout(() => {
+            this.generateInitialSchedule();
+        }, 1000);
+    }
+
+    /**
+     * Reset form inputs to default values
+     */
+    resetFormInputs() {
+        // Reset profile inputs
+        const inputs = ['bedtime', 'wakeTime', 'sleepGoal', 'lifestyle'];
+        inputs.forEach(inputId => {
+            const element = document.getElementById(inputId);
+            if (element) {
+                element.value = '';
+            }
+        });
+
+        // Reset sleep issues checkboxes
+        document.querySelectorAll('input[name="sleepIssues"]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+    }
+
+    /**
+     * Clear UI elements
+     */
+    clearUIElements() {
+        // Clear schedule container
+        const scheduleContainer = document.getElementById('scheduleContainer');
+        if (scheduleContainer) {
+            scheduleContainer.innerHTML = '';
+        }
+
+        // Clear insights container
+        const insightsContainer = document.getElementById('insightsContainer');
+        if (insightsContainer) {
+            insightsContainer.innerHTML = '';
+        }
+
+        // Clear analysis text
+        const sleepAnalysis = document.getElementById('sleepAnalysis');
+        const aiStatus = document.getElementById('aiStatus');
+        if (sleepAnalysis) sleepAnalysis.textContent = '';
+        if (aiStatus) aiStatus.textContent = '';
+    }
+
+    /**
+     * Reset progress indicators
+     */
+    resetProgressIndicators() {
+        const elements = ['sleepScore', 'completionRate', 'tasksCompleted', 'highPriorityDone', 'streakCount'];
+        elements.forEach(elementId => {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = elementId === 'streakCount' ? '0' : '0%';
+            }
+        });
+
+        // Reset progress bar
+        const progressFill = document.getElementById('progressFill');
+        if (progressFill) {
+            progressFill.style.width = '0%';
+        }
+    }
+
+    /**
      * Export schedule for external use
      */
     exportSchedule() {
@@ -1370,7 +1474,7 @@ class SleepSchedulerApp {
             completedTasks: Array.from(this.completedTasks),
             aiModel: this.ai.exportModelState()
         };
-        
+
         console.log('Schedule exported:', data);
         return data;
     }

@@ -10,11 +10,19 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1><i class="fas fa-moon"></i> AI Sleep Hygiene Scheduler</h1>
-            <p>Personalized sleep optimization powered by AI</p>
-            <div class="sleep-score">
-                <i class="fas fa-chart-line"></i>
-                <span>Sleep Score: <span id="sleepScore">0</span>%</span>
+            <div class="header-content">
+                <div class="header-text">
+                    <h1><i class="fas fa-moon"></i> AI Sleep Hygiene Scheduler</h1>
+                    <p>Personalized sleep optimization powered by AI</p>
+                    <div class="sleep-score">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Sleep Score: <span id="sleepScore">0</span>%</span>
+                    </div>
+                </div>
+                <button id="resetButton" class="btn-reset" title="Reset all data">
+                    <i class="fas fa-redo"></i>
+                    <span>Reset</span>
+                </button>
             </div>
         </header>
 
