@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Sleep Hygiene Scheduler</title>
+    <link rel="stylesheet" href="#styles">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-moon"></i> AI Sleep Hygiene Scheduler</h1>
+            <p>Personalized sleep optimization powered by AI</p>
+            <div class="sleep-score">
+                <i class="fas fa-chart-line"></i>
+                <span>Sleep Score: <span id="sleepScore">0</span>%</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="sidebar">
+                <div class="profile-card">
+                    <h2><i class="fas fa-user-cog"></i> Sleep Profile</h2>
+                    
+                    <div class="form-group">
+                        <label for="bedtime">Bedtime</label>
+                        <input type="time" id="bedtime" value="22:00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="wakeTime">Wake Time</label>
+                        <input type="time" id="wakeTime" value="06:00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sleepGoal">Sleep Goal (hours)</label>
+                        <select id="sleepGoal">
+                            <option value="7">7 hours</option>
+                            <option value="8" selected>8 hours</option>
+                            <option value="9">9 hours</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lifestyle">Activity Level</label>
+                        <select id="lifestyle">
+                            <option value="sedentary">Sedentary</option>
+                            <option value="moderate" selected>Moderate</option>
+                            <option value="active">Very Active</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Sleep Challenges</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="sleepIssues" value="anxiety">
+                                <span>Anxiety/Stress</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="sleepIssues" value="temperature">
+                                <span>Temperature Issues</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="sleepIssues" value="noise">
+                                <span>Noise Sensitivity</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="sleepIssues" value="racing-thoughts">
+                                <span>Racing Thoughts</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="sleepIssues" value="caffeine">
+                                <span>Caffeine Sensitivity</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button id="generateSchedule" class="btn-primary">
+                        <i class="fas fa-magic"></i> Generate AI Schedule
+                    </button>
+                </div>
+            </div>
+
+            <div class="main-panel">
+                <div class="schedule-card">
+                    <h2><i class="fas fa-calendar-day"></i> Today's Sleep Schedule</h2>
+                    <div id="scheduleContainer" class="schedule-container">
+                        <div class="loading-state">
+                            <i class="fas fa-brain"></i>
+                            <p>AI is analyzing your sleep profile...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insights-card">
+                    <h3><i class="fas fa-lightbulb"></i> AI Sleep Insights</h3>
+                    <div id="insightsContainer" class="insights-container">
+                        <div class="insight-item">
+                            <h4>Sleep Window Analysis</h4>
+                            <p id="sleepAnalysis">Configure your profile to see personalized analysis</p>
+                        </div>
+                        <div class="insight-item">
+                            <h4>Recommendation Engine</h4>
+                            <p id="aiStatus">Ready to generate personalized recommendations</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tips-card">
+                    <h3><i class="fas fa-info-circle"></i> Evidence-Based Sleep Tips</h3>
+                    <div class="tips-grid">
+                        <div class="tip-item">
+                            <i class="fas fa-sun"></i>
+                            <h4>Light Exposure</h4>
+                            <p>Bright light in morning, dim light 2 hours before bed</p>
+                        </div>
+                        <div class="tip-item">
+                            <i class="fas fa-thermometer-half"></i>
+                            <h4>Temperature</h4>
+                            <p>Keep bedroom cool (65-68°F) for optimal sleep</p>
+                        </div>
+                        <div class="tip-item">
+                            <i class="fas fa-coffee"></i>
+                            <h4>Caffeine</h4>
+                            <p>Avoid caffeine 6+ hours before bedtime</p>
+                        </div>
+                        <div class="tip-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h4>Blue Light</h4>
+                            <p>Turn off screens 1 hour before sleep</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="progress-dashboard">
+            <h3><i class="fas fa-chart-bar"></i> Progress Dashboard</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="completionRate">0%</div>
+                    <div class="stat-label">Completion Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="tasksCompleted">0</div>
+                    <div class="stat-label">Tasks Done</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="highPriorityDone">0/0</div>
+                    <div class="stat-label">High Priority</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="streakCount">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <style id="styles">
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.sleep-score {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.2);
+    padding: 10px 20px;
+    rounded: 50px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+}
+
+.sleep-score span {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Main Layout */
+.main-content {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* Sidebar Styles */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.profile-card h2 {
+    color: #4c51bf;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4c51bf;
+    box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.1);
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.checkbox-label:hover {
+    background-color: #f3f4f6;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #4c51bf, #7c3aed);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(76, 81, 191, 0.3);
+}
+
+/* Main Panel Styles */
+.main-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.schedule-card,
+.insights-card,
+.tips-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.schedule-card h2,
+.insights-card h3,
+.tips-card h3 {
+    color: #4c51bf;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Schedule Styles */
+.schedule-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+}
+
+.loading-state i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #4c51bf;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.schedule-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.schedule-item.completed {
+    background-color: #ecfdf5;
+    border-color: #10b981;
+    opacity: 0.8;
+}
+
+.schedule-item.high-priority {
+    background-color: #fef2f2;
+    border-color: #ef4444;
+}
+
+.schedule-item.medium-priority {
+    background-color: #fffbeb;
+    border-color: #f59e0b;
+}
+
+.schedule-item.low-priority {
+    background-color: #f0fdf4;
+    border-color: #22c55e;
+}
+
+.schedule-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.task-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.task-info h4 {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.task-info p {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.schedule-right {
+    text-align: right;
+}
+
+.task-time {
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+
+.priority-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.priority-badge.high {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.priority-badge.medium {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.priority-badge.low {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+/* Insights Styles */
+.insights-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.insight-item {
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #4c51bf;
+}
+
+.insight-item h4 {
+    color: #4c51bf;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.insight-item p {
+    color: #374151;
+    font-size: 0.9rem;
+}
+
+/* Tips Grid */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.tip-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 10px;
+    border-left: 4px solid;
+}
+
+.tip-item:nth-child(1) { border-left-color: #f59e0b; }
+.tip-item:nth-child(2) { border-left-color: #8b5cf6; }
+.tip-item:nth-child(3) { border-left-color: #10b981; }
+.tip-item:nth-child(4) { border-left-color: #ef4444; }
+
+.tip-item i {
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+.tip-item h4 {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.tip-item p {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* Progress Dashboard */
+.progress-dashboard {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.progress-dashboard h3 {
+    color: #4c51bf;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 10px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4c51bf;
+}
+
+.stat-label {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background-color: #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4c51bf, #7c3aed);
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.schedule-item {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    }
+    
+    .profile-card,
+    .schedule-card,
+    .insights-card,
+    .tips-card,
+    .progress-dashboard {
+        background: #1f2937;
+        color: #f9fafb;
+        border-color: #374151;
+    }
+    
+    .form-group input,
+    .form-group select {
+        background: #374151;
+        border-color: #4b5563;
+        color: #f9fafb;
+    }
+    
+    .tip-item,
+    .insight-item,
+    .stat-item {
+        background: #374151;
+        color: #f9fafb;
+    }
+}
+    </style>
+
+    <script>
+// Sleep Hygiene AI Model
+class SleepHygieneAI {
+    constructor() {
+        this.recommendations = new Map();
+        this.userProfile = null;
+        this.sleepPatterns = [];
+    }
+
+    // Core AI recommendation engine
+    analyzeProfile(profile) {
+        this.userProfile = profile;
+        const recommendations = [];
+        
+        // Calculate sleep metrics
+        const bedtimeHour = parseInt(profile.bedtime.split(':')[0]);
+        const bedtimeMinute = parseInt(profile.bedtime.split(':')[1]);
+        const wakeHour = parseInt(profile.wakeTime.split(':')[0]);
+        const wakeMinute = parseInt(profile.wakeTime.split(':')[1]);
+        
+        const bedtimeDecimal = bedtimeHour + (bedtimeMinute / 60);
+        const wakeTimeDecimal = wakeHour + (wakeMinute / 60);
+        
+        // Calculate sleep duration (handling overnight sleep)
+        const sleepDuration = wakeTimeDecimal < bedtimeDecimal ? 
+            (24 - bedtimeDecimal) + wakeTimeDecimal : 
+            wakeTimeDecimal - bedtimeDecimal;
+
+        // Base recommendations with AI logic
+        const baseRecs = this.generateBaseRecommendations(bedtimeHour, wakeHour);
+        recommendations.push(...baseRecs);
+
+        // Lifestyle-based recommendations
+        const lifestyleRecs = this.generateLifestyleRecommendations(profile.lifestyle, bedtimeHour);
+        recommendations.push(...lifestyleRecs);
+
+        // Issue-specific recommendations
+        const issueRecs = this.generateIssueRecommendations(profile.sleepIssues, bedtimeHour);
+        recommendations.push(...issueRecs);
+
+        // Sleep duration optimization
+        if (sleepDuration < profile.sleepGoal) {
+            recommendations.push(this.generateSleepDurationAlert(sleepDuration, profile.sleepGoal));
+        }
+
+        // Circadian rhythm optimization
+        const circadianRecs = this.generateCircadianRecommendations(profile, bedtimeHour, wakeHour);
+        recommendations.push(...circadianRecs);
+
+        return this.prioritizeRecommendations(recommendations);
+    }
+
+    generateBaseRecommendations(bedtimeHour, wakeHour) {
+        return [
+            {
+                id: 'wind-down',
+                title: 'Wind-down Routine',
+                description: 'Begin relaxing activities (reading, gentle stretching, warm bath)',
+                time: this.formatTime(bedtimeHour - 2, 0),
+                priority: 'high',
+                category: 'routine',
+                icon: 'fas fa-leaf'
+            },
+            {
+                id: 'screen-cutoff',
+                title: 'Digital Sunset',
+                description: 'Turn off all screens and blue light devices',
+                time: this.formatTime(bedtimeHour - 1, 0),
+                priority: 'high',
+                category: 'environment',
+                icon: 'fas fa-mobile-alt'
+            },
+            {
+                id: 'bedroom-prep',
+                title: 'Bedroom Preparation',
+                description: 'Dim lights, cool temperature, prepare sleep environment',
+                time: this.formatTime(bedtimeHour - 1, 30),
+                priority: 'medium',
+                category: 'environment',
+                icon: 'fas fa-bed'
+            },
+            {
+                id: 'morning-light',
+                title: 'Morning Light Exposure',
+                description: 'Get 10-15 minutes of bright natural light',
+                time: this.formatTime(wakeHour, 30),
+                priority: 'high',
+                category: 'circadian',
+                icon: 'fas fa-sun'
+            }
+        ];
+    }
+
+    generateLifestyleRecommendations(lifestyle, bedtimeHour) {
+        const recommendations = [];
+        
+        switch(lifestyle) {
+            case 'active':
+                recommendations.push({
+                    id: 'exercise-timing',
+                    title: 'Exercise Cutoff',
+                    description: 'Finish intense workouts to allow body temperature to drop',
+                    time: this.formatTime(bedtimeHour - 4, 0),
+                    priority: 'medium',
+                    category: 'lifestyle',
+                    icon: 'fas fa-dumbbell'
+                });
+                break;
+            case 'sedentary':
+                recommendations.push({
+                    id: 'light-movement',
+                    title: 'Gentle Movement',
+                    description: 'Take a short walk or do light stretching',
+                    time: this.formatTime(bedtimeHour - 3, 0),
+                    priority: 'medium',
+                    category: 'lifestyle',
+                    icon: 'fas fa-walking'
+                });
+                break;
+        }
+        
+        return recommendations;
+    }
+
+    generateIssueRecommendations(sleepIssues, bedtimeHour) {
+        const recommendations = [];
+        
+        if (sleepIssues.includes('anxiety')) {
+            recommendations.push({
+                id: 'relaxation',
+                title: 'Anxiety Management',
+                description: 'Practice deep breathing, meditation, or progressive muscle relaxation',
+                time: this.formatTime(bedtimeHour - 1, 15),
+                priority: 'high',
+                category: 'mental-health',
+                icon: 'fas fa-heart'
+            });
+        }
+
+        if (sleepIssues.includes('temperature')) {
+            recommendations.push({
+                id: 'temperature-control',
+                title: 'Temperature Optimization',
+                description: 'Set room to 65-68°F, use breathable bedding',
+                time: this.formatTime(bedtimeHour - 1, 0),
+                priority: 'high',
+                category: 'environment',
+                icon: 'fas fa-thermometer-half'
+            });
+        }
+
+        if (sleepIssues.includes('noise')) {
+            recommendations.push({
+                id: 'noise-control',
+                title: 'Sound Environment',
+                description: 'Use earplugs, white noise, or ensure quiet environment',
+                time: this.formatTime(bedtimeHour - 0, 30),
+                priority: 'medium',
+                category: 'environment',
+                icon: 'fas fa-volume-mute'
+            });
+        }
+
+        if (sleepIssues.includes('racing-thoughts')) {
+            recommendations.push({
+                id: 'thought-management',
+                title: 'Mind Clearing',
+                description: 'Write in journal or practice mindfulness to quiet thoughts',
+                time: this.formatTime(bedtimeHour - 1, 45),
+                priority: 'high',
+                category: 'mental-health',
+                icon: 'fas fa-brain'
+            });
+        }
+
+        if (sleepIssues.includes('caffeine')) {
+            recommendations.push({
+                id: 'caffeine-sensitive',
+                title: 'Caffeine Cutoff (Sensitive)',
+                description: 'Last caffeinated drink - you\'re caffeine sensitive',
+                time: this.formatTime(bedtimeHour - 8, 0),
+                priority: 'high',
+                category: 'nutrition',
+                icon: 'fas fa-coffee'
+            });
+        } else {
+            recommendations.push({
+                id: 'caffeine-cutoff',
+                title: 'Caffeine Cutoff',
+                description: 'Last chance for coffee/tea to avoid sleep disruption',
+                time: this.formatTime(Math.max(14, bedtimeHour - 6), 0),
+                priority: 'medium',
+                category: 'nutrition',
+                icon: 'fas fa-coffee'
+            });
+        }
+
+        return recommendations;
+    }
+
+    generateCircadianRecommendations(profile, bedtimeHour, wakeHour) {
+        return [
+            {
+                id: 'meal-timing',
+                title: 'Dinner Timing',
+                description: 'Finish eating large meals 3 hours before bed',
+                time: this.formatTime(bedtimeHour - 3, 0),
+                priority: 'medium',
+                category: 'nutrition',
+                icon: 'fas fa-utensils'
+            },
+            {
+                id: 'hydration-cutoff',
+                title: 'Hydration Management',
+                description: 'Reduce fluid intake to minimize night wakings',
+                time: this.formatTime(bedtimeHour - 2, 0),
+                priority: 'low',
+                category: 'nutrition',
+                icon: 'fas fa-tint'
+            }
+        ];
+    }
+
+    generateSleepDurationAlert(currentDuration, goalDuration) {
+        return {
+            id: 'sleep-duration-alert',
+            title: 'Sleep Duration Optimization',
+            description: `Current: ${currentDuration.toFixed(1)}h | Goal: ${goalDuration}h. Consider adjusting schedule.`,
+            time: 'flexible',
+            priority: 'high',
+            category: 'schedule',
+            icon: 'fas fa-clock'
+        };
+    }
+
+    prioritizeRecommendations(recommendations) {
+        // AI prioritization based on sleep science
+        const priorityOrder = { 'high': 3, 'medium': 2, 'low': 1 };
+        
+        return recommendations.sort((a, b) => {
+            // First by priority
+            if (priorityOrder[a.priority] !== priorityOrder[b.priority]) {
+                return priorityOrder[b.priority] - priorityOrder[a.priority];
+            }
+            // Then by time
+            if (a.time !== 'flexible' && b.time !== 'flexible') {
+                return a.time.localeCompare(b.time);
+            }
+            return 0;
+        });
+    }
+
+    formatTime(hour, minute) {
+        // Handle hour overflow/underflow
+        while (hour >= 24) hour -= 24;
+        while (hour < 0) hour += 24;
+        
+        return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+    }
+
+    generateInsights(profile, recommendations) {
+        const bedtimeHour = parseInt(profile.bedtime.split(':')[0]);
+        const wakeHour = parseInt(profile.wakeTime.split(':')[0]);
+        const sleepDuration = wakeHour < bedtimeHour ? 
+            (24 - bedtimeHour) + wakeHour : 
+            wakeHour - bedtimeHour;
+
+        return {
+            sleepAnalysis: `Your current schedule provides ${sleepDuration} hours of sleep opportunity. ${
+                sleepDuration >= profile.sleepGoal ? 
+                'This meets your sleep goal!' : 
+                `You need ${profile.sleepGoal - sleepDuration} more hours to reach your goal.`
+            }`,
+            aiStatus: `AI has generated ${recommendations.length} personalized recommendations targeting ${
+                new Set(recommendations.map(r => r.category)).size
+            } key areas for sleep optimization.`,
+            circadianHealth: this.assessCircadianHealth(profile),
+            riskFactors: this.identifyRiskFactors(profile, sleepDuration)
+        };
+    }
+
+    assessCircadianHealth(profile) {
+        const bedtimeHour = parseInt(profile.bedtime.split(':')[0]);
+        const wakeHour = parseInt(profile.wakeTime.split(':')[0]);
+        
+        // Optimal sleep window is typically 10 PM - 6 AM
+        let score = 100;
+        
+        if (bedtimeHour > 23 || bedtimeHour < 21) score -= 20;
+        if (wakeHour > 8 || wakeHour < 5) score -= 15;
+        
+        return {
+            score: Math.max(0, score),
+            feedback: score >= 80 ? 'Excellent circadian alignment!' : 
+                     score >= 60 ? 'Good timing with room for improvement' : 
+                     'Consider adjusting sleep times for better circadian health'
+        };
+    }
+
+    identifyRiskFactors(profile, sleepDuration) {
+        const risks = [];
+        
+        if (sleepDuration < 7) risks.push('Insufficient sleep duration');
+        if (profile.sleepIssues.length > 2) risks.push('Multiple sleep challenges present');
+        if (parseInt(profile.bedtime.split(':')[0]) > 23) risks.push('Late bedtime may disrupt circadian rhythm');
+        
+        return risks;
+    }
+}
+
+// Sleep Scheduler Application
+class SleepSchedulerApp {
+    constructor() {
+        this.ai = new SleepHygieneAI();
+        this.completedTasks = new Set();
+        this.currentSchedule = [];
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.generateInitialSchedule();
+    }
+
+    bindEvents() {
+        // Profile form events
+        document.getElementById('bedtime').addEventListener('change', () => this.updateProfile());
+        document.getElementById('wakeTime').addEventListener('change', () => this.updateProfile());
+        document.getElementById('sleepGoal').addEventListener('change', () => this.updateProfile());
+        document.getElementById('lifestyle').addEventListener('change', () => this.updateProfile());
+        
+        // Sleep issues checkboxes
+        document.querySelectorAll('input[name="sleepIssues"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => this.updateProfile());
+        });
+
+        // Generate schedule button
+        document.getElementById('generateSchedule').addEventListener('click', () => {
+            this.generateSchedule();
+        });
+    }
+
+    getUserProfile() {
+        const sleepIssues = Array.from(document.querySelectorAll('input[name="sleepIssues"]:checked'))
+            .map(cb => cb.value);
+
+        return {
+            bedtime: document.getElementById('bedtime').value,
+            wakeTime: document.getElementById('wakeTime').value,
+            sleepGoal: parseInt(document.getElementById('sleepGoal').value),
+            lifestyle: document.getElementById('lifestyle').value,
+            sleepIssues: sleepIssues
+        };
+    }
+
+    updateProfile() {
+        this.generateSchedule();
+    }
+
+    generateInitialSchedule() {
+        setTimeout(() => this.generateSchedule(), 1000);
+    }
+
+    generateSchedule() {
+        const profile = this.getUserProfile();
+        const recommendations = this.ai.analyzeProfile(profile);
+        const insights = this.ai.generateInsights(profile, recommendations);
+        
+        this.currentSchedule = recommendations;
+        this.renderSchedule(recommendations);
+        this.renderInsights(insights);
+        this.updateProgress();
+    }
+
+    renderSchedule(recommendations) {
+        const container = document.getElementById('scheduleContainer');
+        
+        if (recommendations.length === 0) {
+            container.innerHTML = `
+                <div class="loading-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>No recommendations generated. Please check your profile settings.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = recommendations.map(rec => `
+            <div class="schedule-item ${rec.priority}-priority ${this.completedTasks.has(rec.id) ? 'completed' : ''}" 
+                 onclick="app.toggleTask('${rec.id}')">
+                <div class="schedule-left">
+                    <input type="checkbox" class="task-checkbox" 
+                           ${this.completedTasks.has(rec.id) ? 'checked' : ''}>
+                    <i class="${rec.icon}"></i>
+                    <div class="task-info">
+                        <h4>${rec.title}</h4>
+                        <p>${rec.description}</p>
+                    </div>
+                </div>
+                <div class="schedule-right">
+                    <div class="task-time">${rec.time === 'flexible' ? 'Anytime' : rec.time}</div>
+                    <div class="priority-badge ${rec.priority}">${rec.priority} priority</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    renderInsights(insights) {
+        document.getElementById('sleepAnalysis').textContent = insights.sleepAnalysis;
+        document.getElementById('aiStatus').textContent = insights.aiStatus;
+        
+        // Add circadian health insight
+        const insightsContainer = document.getElementById('insightsContainer');
+        const circadianInsight = insightsContainer.querySelector('.circadian-insight') || 
+            document.createElement('div');
+        
+        if (!insightsContainer.querySelector('.circadian-insight')) {
+            circadianInsight.className = 'insight-item circadian-insight';
+            insightsContainer.appendChild(circadianInsight);
+        }
+        
+        circadianInsight.innerHTML = `
+            <h4>Circadian Health Score: ${insights.circadianHealth.score}%</h4>
+            <p>${insights.circadianHealth.feedback}</p>
+        `;
+
+        // Add risk factors if any
+        if (insights.riskFactors.length > 0) {
+            const riskInsight = insightsContainer.querySelector('.risk-insight') || 
+                document.createElement('div');
+            
+            if (!insightsContainer.querySelector('.risk-insight')) {
+                riskInsight.className = 'insight-item risk-insight';
+                insightsContainer.appendChild(riskInsight);
+            }
+            
+            riskInsight.innerHTML = `
+                <h4>⚠️ Sleep Risk Factors</h4>
+                <p>${insights.riskFactors.join(', ')}</p>
+            `;
+        }
+    }
+
+    toggleTask(taskId) {
+        if (this.completedTasks.has(taskId)) {
+            this.completedTasks.delete(taskId);
+        } else {
+            this.completedTasks.add(taskId);
+        }
+        
+        this.updateTaskVisual(taskId);
+        this.updateProgress();
+    }
+
+    updateTaskVisual(taskId) {
+        const taskElement = document.querySelector(`[onclick="app.toggleTask('${taskId}')"]`);
+        if (taskElement) {
+            const checkbox = taskElement.querySelector('.task-checkbox');
+            const isCompleted = this.completedTasks.has(taskId);
+            
+            checkbox.checked = isCompleted;
+            taskElement.classList.toggle('completed', isCompleted);
+        }
+    }
+
+    updateProgress() {
+        const totalTasks = this.currentSchedule.length;
+        const completedCount = this.completedTasks.size;
+        const completionRate = totalTasks > 0 ? Math.round((completedCount / totalTasks) * 100) : 0;
+        
+        const highPriorityTasks = this.currentSchedule.filter(task => task.priority === 'high');
+        const highPriorityCompleted = highPriorityTasks.filter(task => 
+            this.completedTasks.has(task.id)).length;
+
+        // Update UI elements
+        document.getElementById('sleepScore').textContent = completionRate;
+        document.getElementById('completionRate').textContent = `${completionRate}%`;
+        document.getElementById('tasksCompleted').textContent = completedCount;
+        document.getElementById('highPriorityDone').textContent = 
+            `${highPriorityCompleted}/${highPriorityTasks.length}`;
+        
+        // Update progress bar
+        const progressFill = document.getElementById('progressFill');
+        progressFill.style.width = `${completionRate}%`;
+        
+        // Calculate streak (simplified for demo)
+        const streak = this.calculateStreak();
+        document.getElementById('streakCount').textContent = streak;
+    }
+
+    calculateStreak() {
+        // Simplified streak calculation
+        const completionRate = this.completedTasks.size / Math.max(1, this.currentSchedule.length);
+        return completionRate >= 0.8 ? Math.floor(Math.random() * 7) + 1 : 0;
+    }
+}
+
+// Initialize the application
+let app;
+document.addEventListener('DOMContentLoaded', () => {
+    app = new SleepSchedulerApp();
+});
+
+// Add some CSS animations and transitions
+document.addEventListener('DOMContentLoaded', () => {
+    // Animate progress bar on load
+    setTimeout(() => {
+        const progressBar = document.querySelector('.progress-bar');
+        progressBar.style.opacity = '1';
+    }, 500);
+
+    // Add smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+});
+    </script>
+</body>
+</html>
