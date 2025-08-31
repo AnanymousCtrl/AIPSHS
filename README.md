@@ -32,6 +32,3 @@ AI Sleep Hygiene Scheduler is a personalized sleep optimization web application 
 
 ## License
 This project is open source and free to use.
-
-## Author
-Created by [Your Name or Organization]
