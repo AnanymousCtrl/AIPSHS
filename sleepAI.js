@@ -977,31 +977,14 @@ class SleepSchedulerApp {
         console.log('Initializing Sleep Scheduler App...');
         this.bindEvents();
         this.loadUserData();
-        setTimeout(() => this.generateInitialSchedule(), 1000);
+        // Schedule will only generate when user clicks the button
     }
 
     /**
      * Bind event listeners
      */
     bindEvents() {
-        // Profile form events
-        const profileInputs = [
-            'bedtime', 'wakeTime', 'sleepGoal', 'lifestyle'
-        ];
-
-        profileInputs.forEach(inputId => {
-            const element = document.getElementById(inputId);
-            if (element) {
-                element.addEventListener('change', () => this.updateProfile());
-            }
-        });
-
-        // Sleep issues checkboxes
-        document.querySelectorAll('input[name="sleepIssues"]').forEach(checkbox => {
-            checkbox.addEventListener('change', () => this.updateProfile());
-        });
-
-        // Generate schedule button
+        // Generate schedule button - ONLY trigger schedule generation on button click
         const generateBtn = document.getElementById('generateSchedule');
         if (generateBtn) {
             generateBtn.addEventListener('click', () => this.generateSchedule());
@@ -1013,7 +996,9 @@ class SleepSchedulerApp {
             resetBtn.addEventListener('click', () => this.resetAllData());
         }
 
-        // Auto-save on changes
+        // Profile form events - NO automatic schedule generation
+        // Users can change form values without triggering schedule generation
+        // Schedule will only be generated when they click the button
     }
 
     /**
