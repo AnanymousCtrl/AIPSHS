@@ -15,7 +15,7 @@ AI Sleep Hygiene Scheduler is a personalized sleep optimization web application 
 
 ## How to Use
 
-### Option 1: Frontend Only (Original)
+### Option 1: Frontend Only 
 1. Open `index.html` in a modern web browser.
 2. Fill in your sleep profile details including bedtime, wake time, sleep goal, activity level, and any sleep challenges.
 3. Click the "Generate AI Schedule" button to receive personalized sleep recommendations.
